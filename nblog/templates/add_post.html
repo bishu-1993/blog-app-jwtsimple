@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% block title %}add blog {% endblock %}
+{% block content %}
+{% if user.is_authenticated%}
+<h3>
+      Post a blog
+</h3>
+<br/><br/>
+    <div class="mb-3">
+        <div class="form-group">
+            <form method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                {{form.as_p}}
+                <button type="button" class="btn btn-success">Submit</button>
+            </form>
+        </div>
+    </div>
+<script>
+    var name ="{{user.id}}";
+    document.getElementById("eld").value = name;
+</script>
+{% else %}
+    Please login
+{% endif %}
+{% endblock %}

@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+{% block content %}
+    <title xmlns="http://www.w3.org/1999/html">
+    {% block title %}
+        {{post.title_tag}}
+    {% endblock %}
+    </title>
+    <body>
+        <h1>{{post.title}}</h1>-created at {{post.post_date}}
+        <small> By :{{post.author}}
+            {% if user.is_authenticated%}
+                {% if user.id == post.author.id%}
+                    <a href="{% url 'update_post' post.pk %}"><button type="button" class="btn btn-warning">Edit</button></a>
+                    <a href="{% url 'delete_post' post.pk %}"><button type="button" class="btn btn-danger">Delete</button></a></small><br/>
+                {% endif%}
+            {% endif%}
+        <br/><br/>
+        {% if post.header_image %}
+            <center>
+                <picture>
+                    <div class="ratio" style="--bs-aspect-ratio: 30%;">
+                        <div class="ratio" style="width: 30vw;">
+                        <source srcset="image-small.jpg" media="(max-width: 400px)">
+                        <img src="{{ post.header_image.url }}" alt="Header Image">
+                        </div>
+
+            <!--            <div><img src="{{post.header_image.url }}"></div>-->
+        <!--                <source srcset="image-small.jpg" media="(max-width: 10px)">-->
+        <!--                <img src="{{post.header_image.url }}" alt="Header Image">-->
+                    </div>
+                </picture>
+            </center>
+        {% endif %}
+
+            <br/><br/>
+            {{post.body}}
+            </br>
+            <a href="{% url 'home' %}"><button  class="btn btn-secondary">Back</button></a><br/><br/><br/>
+    </body>
+{% endblock %}

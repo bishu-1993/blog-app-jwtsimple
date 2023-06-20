@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+{% block content %}
+<title>
+    {% block title %}
+    Blog home
+    {% endblock %}
+</title>
+<div class="row">
+    {% for post in object_list %}
+        <div class="col-md-4">
+            <div class="card shadow-sm mb-4">
+                <svg class="bd-placeholder-img card-img-top" width="100%" height="220" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false">
+                    <title>{{ post.title }}</title>
+                    <rect width="100%" height="50%" fill="#55595c"/>
+                    {% if post.header_image %}
+                        <image xlink:href="{{ post.header_image.url }}" width="100%" height="100%" preserveAspectRatio="xMidYMid slice" />
+                    {% endif %}
+                    <text x="50%" y="50%" fill="#eceeef" dy=".3em">{{ post.author }} - created at {{ post.post_date }}<br/></text>
+                </svg>
+                <div class="card-body">
+                    <h2 class="card-title"><a href="{% url 'article' post.pk %}">{{ post.title }}</a></h2>
+                    <p class="card-text">{{ post.body|slice:":500" }}</p>
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div class="btn-group">
+                            <a class="nav-link" href="{% url 'article' post.pk %}"><button type="button" class="btn btn-sm btn-outline-secondary">Read More</button></a>
+                        </div>
+                        <small class="text-body-secondary">Posted by {{ post.author }} - {{ post.post_date }}</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+</div>
+{% endblock %}

@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% block content %}
+<html lang="en" xmlns="http://www.w3.org/1999/html" xmlns="http://www.w3.org/1999/html">
+
+
+    {% if user.is_authenticated%}
+        {% if user.id == post.author.id%}
+            <h1>
+               Edit blog
+            </h1>
+            <br><br>
+            <body>
+            <div class="form-group">
+                <form method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    {{form.as_p }}
+                    {% if form.instance.header_image %}
+                        <img src="{{ form.instance.header_image.url }}" alt="Header Image" class="img-fluid">
+                    {% endif %}
+                    <button  class="btn btn-secondary">Update</button>
+                </form>
+            </div>
+            </body>
+        {% else %}
+            This is not your blog
+        {% endif %}
+    {% else %}
+        Please login
+    {% endif %}
+</html>
+{% endblock %}
